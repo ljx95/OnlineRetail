@@ -155,6 +155,11 @@
         select
         <include refid="Base_Column_List"/>
         from brand_orders
+        <where>
+            <if test="title!=null and title!=''">
+                and title like "%"#{title,jdbcType=VARCHAR}"%"
+            </if>
+        </where>
     </select>
 
 </mapper>

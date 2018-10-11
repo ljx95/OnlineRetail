@@ -17,14 +17,14 @@ public class BrandOrdersController {
     private BrandOrdersService brandOrdersService;
 
     @RequestMapping("list")
-    public String toBrandorderlist(Model model) {
+    public String toBrandorderlist(Model model, BrandOrders brandOrders) {
         List<BrandOrders> awaitingPaymentList = new ArrayList<BrandOrders>();
         List<BrandOrders> awaitingShipmentList = new ArrayList<BrandOrders>();
         List<BrandOrders> shippedList = new ArrayList<BrandOrders>();
         List<BrandOrders> completeList = new ArrayList<BrandOrders>();
         List<BrandOrders> canceledList = new ArrayList<BrandOrders>();
 
-        List<BrandOrders> brandOrdersList = brandOrdersService.listAll(new BrandOrders());
+        List<BrandOrders> brandOrdersList = brandOrdersService.listAll(brandOrders);
         for (BrandOrders bo : brandOrdersList) {
             switch (bo.getStatus()) {
                 case 1:
@@ -47,6 +47,7 @@ public class BrandOrdersController {
             }
         }
 
+        model.addAttribute("brandOrdersList", brandOrdersList);
         model.addAttribute("awaitingPaymentList", awaitingPaymentList);
         model.addAttribute("awaitingShipmentList", awaitingShipmentList);
         model.addAttribute("shippedList", shippedList);
@@ -56,4 +57,15 @@ public class BrandOrdersController {
         return "brand-orderlist";
     }
 
+    @RequestMapping("shipItem")
+    public String shipItem(BrandOrders brandOrders) {
+        brandOrdersService.shipItem(brandOrders);
+        return "redirect:/BrandOrders/list";
+    }
+
+    @RequestMapping("cancel")
+    public String cancel(BrandOrders brandOrders) {
+        brandOrdersService.cancel(brandOrders);
+        return "redirect:/BrandOrders/list";
+    }
 }

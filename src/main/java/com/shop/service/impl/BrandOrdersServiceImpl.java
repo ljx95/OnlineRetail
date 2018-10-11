@@ -16,4 +16,16 @@ public class BrandOrdersServiceImpl implements BrandOrdersService {
     public ArrayList<BrandOrders> listAll(BrandOrders brandOrders) {
         return brandOrdersMapper.listAll(brandOrders);
     }
+
+    //发货
+    public void shipItem(BrandOrders brandOrders) {
+        brandOrders.setStatus(3);
+        brandOrdersMapper.updateByPrimaryKeySelective(brandOrders);
+    }
+
+    //取消
+    public void cancel(BrandOrders brandOrders) {
+        brandOrders.setStatus(5);
+        brandOrdersMapper.updateByPrimaryKeySelective(brandOrders);
+    }
 }

@@ -21,6 +21,7 @@
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
         <property name="url"
                   value="jdbc:mysql://123.206.99.124:3306/onlineretail?useUnicode=true&amp;characterEncoding=utf-8"/>
+
         <property name="username" value="root"/>
         <property name="password" value="1234"/>
     </bean>

@@ -15,4 +15,5 @@ public class BrandInfoServiceImpl implements BrandInfoService {
     public void add(BrandInfo brandInfo) {
         brandInfoMapper.insertSelective(brandInfo);
     }
+
 }

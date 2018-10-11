@@ -245,7 +245,7 @@
 
         <li>
 
-            <a href="code.html" target="menuFrame">
+            <a href="/Dictionary/toList" target="menuFrame">
 
                 <i class="icon-picture"></i>
 
@@ -259,7 +259,7 @@
 
         <li>
 
-            <a href="parameter.html" target="menuFrame">
+            <a href="/Parameter/toList" target="menuFrame">
 
                 <i class="icon-th"></i>
 

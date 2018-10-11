@@ -49,23 +49,81 @@
                 <small><i class="icon-double-angle-right"></i> 订单管理</small>
             </h1>
         </div>
-        <form class="form-search">
+        <form id="queryForm" class="form-search" action="/BrandOrders/list" method="post">
             商品标题：
-            <input type="text" class="input-medium search-query">
-            <button onclick="return false;" class="btn btn-purple btn-small">Search <i
+            <input type="text" class="input-medium search-query" id="title" name="title">
+            <button id="btn_search" class="btn btn-purple btn-small">Search <i
                     class="icon-search icon-on-right"></i></button>
         </form>
 
         <div class="tabbable">
             <ul class="nav nav-tabs" id="myTab">
-                <li class="active"><a data-toggle="tab" href="#AwaitingPayment"> 待支付</a></li>
+                <li class="active"><a data-toggle="tab" href="#ListAll"> 全部</a></li>
+                <li class=""><a data-toggle="tab" href="#AwaitingPayment"> 待支付</a></li>
                 <li class=""><a data-toggle="tab" href="#AwaitingShipment"> 待发货</a></li>
                 <li class=""><a data-toggle="tab" href="#shipped">已发货</a></li>
                 <li class=""><a data-toggle="tab" href="#complete">已完成</a></li>
                 <li class=""><a data-toggle="tab" href="#canceled">已取消</a></li>
             </ul>
             <div class="tab-content">
-                <div id="AwaitingPayment" class="tab-pane active">
+                <div id="ListAll" class="tab-pane active">
+                    <p>
+                    <table id="table_bug_report" class="table table-striped table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th class="center">
+                                <label><input type="checkbox" class="ace-checkbox-2"><span class="lbl"></span></label>
+                            </th>
+                            <th>商品标题</th>
+                            <th>价格</th>
+                            <th class="hidden-480">数量</th>
+                            <th>sku</th>
+                            <th class="hidden-480">订单编号</th>
+                            <th class="hidden-480">状态</th>
+                            <th class="hidden-480">订单创建时间</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        <c:forEach items="${brandOrdersList}" var="bo" varStatus="status">
+                            <tr>
+                                <td class="center">
+                                    <label><input type="checkbox" class="input"><span class="lbl"></span></label>
+                                </td>
+                                <td> ${bo.title }</td>
+                                <td>$${bo.price }</td>
+                                <td>${bo.quantity }</td>
+                                <td>${bo.sku }</td>
+                                <td>${bo.orderno }</td>
+                                <td><c:choose>
+                                    <c:when test="${bo.status==1}">
+                                        待支付
+                                    </c:when>
+                                    <c:when test="${bo.status==2}">
+                                        待发货
+                                    </c:when>
+                                    <c:when test="${bo.status==3}">
+                                        已发货
+                                    </c:when>
+                                    <c:when test="${bo.status==4}">
+                                        已完成
+                                    </c:when>
+                                    <c:when test="${bo.status==5}">
+                                        已取消
+                                    </c:when>
+                                    <c:otherwise>
+                                        未知
+                                    </c:otherwise>
+                                </c:choose></td>
+                                <td><fmt:formatDate value="${bo.create_time }" pattern="yyyy/MM/dd-hh:mm:ss"/></td>
+                            </tr>
+                        </c:forEach>
+
+                        </tbody>
+                    </table>
+                    </p>
+                </div>
+                <div id="AwaitingPayment" class="tab-pane">
                     <p>
                     <table id="table_bug_report" class="table table-striped table-bordered table-hover">
                         <thead>
@@ -133,7 +191,10 @@
                                 <td>${bo.orderno }</td>
                                 <td><fmt:formatDate value="${bo.create_time }" pattern="yyyy/MM/dd-hh:mm:ss"/></td>
                                 <td>
-                                    <button class="btn btn-minier btn-purple send-out">发货</button>
+                                    <a href="/BrandOrders/shipItem?id=${bo.id}">
+                                        <button class="btn btn-minier btn-purple send-out">发货
+                                        </button>
+                                    </a>
                                 </td>
                             </tr>
                         </c:forEach>
@@ -174,7 +235,9 @@
                                 <td><fmt:formatDate value="${bo.create_time }" pattern="yyyy/MM/dd-hh:mm:ss"/></td>
                                 <td><a href="brand-ordertracking.html">${bo.transportno}</a></td>
                                 <td>
-                                    <button class="btn btn-minier btn-yellow cancel">取消</button>
+                                    <a href="/BrandOrders/cancel?id=${bo.id}">
+                                        <button class="btn btn-minier btn-yellow cancel">取消</button>
+                                    </a>
                                 </td>
                             </tr>
                         </c:forEach>
@@ -284,10 +347,12 @@
             bootbox.alert("订单已取消!");
         })
 
-
     })
-
-
+</script>
+<script>
+    $("#btn_search").click(function () {
+        $("#queryForm").submit();
+    });
 </script>
 </body>
 </html>

@@ -1,7 +1,7 @@
 package com.shop.service.impl;
 
-import com.shop.mapper.BrandOrdersMapper;
-import com.shop.pojo.BrandOrders;
+import com.shop.mapper.DictionaryMapper;
+import com.shop.pojo.Dictionary;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,17 +14,13 @@ import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:applicationContext.xml")
-public class BrandOrdersServiceImplTest {
+public class DictionaryServiceImplTest {
     @Autowired
-    private BrandOrdersMapper brandOrdersMapper;
+    private DictionaryMapper dictionaryMapper;
 
     @Test
     public void listAll() {
-        BrandOrders brandOrders = new BrandOrders();
-        brandOrders.setTitle("C");
-        List<BrandOrders> brandOrdersList = brandOrdersMapper.listAll(brandOrders);
-        for (BrandOrders b : brandOrdersList) {
-            System.out.println(b.toString());
-        }
+        List<Dictionary> dictionaryList = dictionaryMapper.listAll(new Dictionary());
+        System.out.println(dictionaryList.get(0));
     }
 }

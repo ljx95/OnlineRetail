@@ -17,8 +17,7 @@ public interface BrandOrdersMapper {
 
     int updateByPrimaryKey(BrandOrders record);
 
-//    neo
-
+    /*neo*/
     ArrayList<BrandOrders> listAll(BrandOrders brandOrders);
 
 }
